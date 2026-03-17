@@ -56,7 +56,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
         setTitle("");
         // If we have companies and no companyId is set, pick the first one
         if (companies.length > 0 && !companyId) {
-          setTimeout(() => setCompanyId(companies[0].id), 0);
+          setCompanyId(companies[0].id);
         }
         setDescription("");
         setPriority("Medium");
@@ -114,7 +114,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
           <div className="space-y-2">
             <Label htmlFor="company" className="font-bold text-black dark:text-slate-300">Přiřadit k firmě <span className="text-red-500">*</span></Label>
             <Select 
-              key={`company-select-${companies.length}-${companyId}`}
+              key={`company-select-${companies.length}`}
               value={companyId} 
               onValueChange={(val) => setCompanyId(val || "")}
             >
