@@ -29,7 +29,7 @@ interface CompanyModalProps {
 }
 
 export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProps) {
-  const { addCompany, updateCompany } = useBoard();
+  const { addCompany, updateCompany, rejectCompany } = useBoard();
   
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
@@ -198,10 +198,27 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
             <Textarea id="notes" value={notes} onChange={e => setNotes(e.target.value)} className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10 min-h-[80px] focus-visible:ring-indigo-500/50 text-black dark:text-slate-200" />
           </div>
 
-          <DialogFooter className="pt-4 border-t border-black/20 dark:border-white/10">
-            <Button type="button" variant="ghost" onClick={() => onOpenChange(false)} className="hover:bg-red-50 hover:dark:bg-red-500/20 hover:text-red-700 hover:dark:text-red-300 text-slate-700 dark:text-slate-400 transition-colors">
-              Zrušit
-            </Button>
+          <DialogFooter className="pt-4 border-t border-black/20 dark:border-white/10 flex items-center justify-between sm:justify-between">
+            <div className="flex gap-2">
+              <Button type="button" variant="ghost" onClick={() => onOpenChange(false)} className="hover:bg-red-50 hover:dark:bg-red-500/20 hover:text-red-700 hover:dark:text-red-300 text-slate-700 dark:text-slate-400 transition-colors">
+                Zrušit
+              </Button>
+              {company && company.status === "contacted" && (
+                <Button 
+                  type="button" 
+                  variant="outline" 
+                  onClick={() => {
+                    if (confirm("Opravdu přesunout do odmítnutých?")) {
+                      rejectCompany(company.id);
+                      onOpenChange(false);
+                    }
+                  }}
+                  className="border-red-500/50 text-red-600 hover:bg-red-50 dark:hover:bg-red-950/30"
+                >
+                  Odmítnuto
+                </Button>
+              )}
+            </div>
             <Button type="submit" className="bg-gradient-to-r from-indigo-600 to-purple-700 hover:from-indigo-700 hover:to-purple-800 text-white shadow-lg font-bold">
               {company ? "Uložit změny" : "Přidat firmu"}
             </Button>

@@ -114,12 +114,14 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
           <div className="space-y-2">
             <Label htmlFor="company" className="font-bold text-black dark:text-slate-300">Přiřadit k firmě <span className="text-red-500">*</span></Label>
             <Select 
-              key={`company-select-${companies.length}`}
+              key={`company-select-${companies.length}-${companyId}`}
               value={companyId} 
               onValueChange={(val) => setCompanyId(val || "")}
             >
               <SelectTrigger className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10">
-                <SelectValue placeholder="Vyberte firmu" />
+                <SelectValue placeholder="Vyberte firmu">
+                  {companies.find(c => c.id === companyId)?.name}
+                </SelectValue>
               </SelectTrigger>
               <SelectContent className="bg-white dark:bg-slate-800 border-black/20 dark:border-white/10">
                 {companies.map(c => (

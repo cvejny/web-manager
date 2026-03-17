@@ -65,7 +65,8 @@ export function KanbanBoard() {
             {boardData.columnOrder.map((colId) => {
               const column = boardData.columns[colId];
               const companies = column.companyIds
-                .map((companyId) => boardData.companies[companyId]);
+                .map((companyId) => boardData.companies[companyId])
+                .filter(company => !company?.isRejected);
 
               return (
                 <Column 

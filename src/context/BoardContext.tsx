@@ -13,6 +13,8 @@ interface BoardContextType {
   updateTask: (id: string, updatedFields: Partial<Task>) => void;
   deleteTask: (id: string) => void;
   toggleTaskStatus: (id: string) => void;
+  rejectCompany: (id: string) => void;
+  restoreCompany: (id: string) => void;
 }
 
 const BoardContext = createContext<BoardContextType | undefined>(undefined);
@@ -177,6 +179,14 @@ export function BoardProvider({ children }: { children: ReactNode }) {
     }));
   };
 
+  const rejectCompany = (id: string) => {
+    updateCompany(id, { isRejected: true });
+  };
+
+  const restoreCompany = (id: string) => {
+    updateCompany(id, { isRejected: false });
+  };
+
   if (!isLoaded) return null;
 
   return (
@@ -189,7 +199,9 @@ export function BoardProvider({ children }: { children: ReactNode }) {
       addTask,
       updateTask,
       deleteTask,
-      toggleTaskStatus 
+      toggleTaskStatus,
+      rejectCompany,
+      restoreCompany
     }}>
       {children}
     </BoardContext.Provider>

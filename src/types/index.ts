@@ -13,6 +13,7 @@ export interface Company {
   priority: Priority;
   revenue: number; // Předpokládaná cena zakázky
   status: string; // References Column ID
+  isRejected?: boolean;
 }
 
 export interface ColumnData {
