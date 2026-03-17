@@ -66,7 +66,7 @@ export function Column({ column, companies, onEditCompany }: ColumnProps) {
         </Badge>
 
         {showRejected && column.id === "contacted" && (
-          <div className="absolute top-full left-0 w-full z-[100] bg-white dark:bg-slate-800 shadow-2xl rounded-b-xl border border-black/10 dark:border-white/10 p-3">
+          <div className="absolute top-full left-0 w-full z-50 bg-white/95 dark:bg-slate-900 shadow-2xl rounded-b-xl border border-indigo-500/20 dark:border-indigo-500/30 p-3 backdrop-blur-md">
             <div className="flex justify-between items-center mb-2 pb-1 border-b border-black/5 dark:border-white/5">
               <span className="text-xs font-bold uppercase text-slate-500">Odmítnuté firmy</span>
               <button onClick={() => setShowRejected(false)} className="text-slate-400 hover:text-slate-600"><XCircle size={14} /></button>
