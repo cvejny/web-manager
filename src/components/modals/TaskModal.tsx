@@ -43,24 +43,29 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
   const companies = Object.values(boardData.companies);
 
   useEffect(() => {
-    if (task) {
-      setTitle(task.title);
-      setCompanyId(task.companyId);
-      setDescription(task.description);
-      setPriority(task.priority);
-      setDueDate(task.dueDate);
-      setDueTime(task.dueTime || "");
-      setIsAllDay(task.isAllDay);
-    } else {
-      setTitle("");
-      setCompanyId(companies[0]?.id || "");
-      setDescription("");
-      setPriority("Medium");
-      setDueDate(new Date().toISOString().split('T')[0]);
-      setDueTime("12:00");
-      setIsAllDay(true);
+    if (isOpen) {
+      if (task) {
+        setTitle(task.title);
+        setCompanyId(task.companyId);
+        setDescription(task.description);
+        setPriority(task.priority);
+        setDueDate(task.dueDate);
+        setDueTime(task.dueTime || "");
+        setIsAllDay(task.isAllDay);
+      } else {
+        setTitle("");
+        // If we have companies and no companyId is set, pick the first one
+        if (companies.length > 0 && !companyId) {
+          setCompanyId(companies[0].id);
+        }
+        setDescription("");
+        setPriority("Medium");
+        setDueDate(new Date().toISOString().split('T')[0]);
+        setDueTime("12:00");
+        setIsAllDay(true);
+      }
     }
-  }, [task, isOpen, companies.length]);
+  }, [task, isOpen, companies]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -87,7 +92,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
 
   return (
     <Dialog open={isOpen} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-xl bg-white dark:bg-slate-900/90 border-black/20 dark:border-white/10 glass-card">
+      <DialogContent className="sm:max-w-xl bg-white dark:bg-slate-900/90 border-black/20 dark:border-white/10 glass-card font-sans">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold bg-gradient-to-r from-indigo-700 to-purple-800 dark:from-indigo-200 dark:to-purple-200 bg-clip-text text-transparent">
             {task ? "Upravit úkol" : "Přidat nový úkol"}
@@ -108,7 +113,11 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
 
           <div className="space-y-2">
             <Label htmlFor="company" className="font-bold text-black dark:text-slate-300">Přiřadit k firmě <span className="text-red-500">*</span></Label>
-            <Select value={companyId} onValueChange={(val) => setCompanyId(val || "")}>
+            <Select 
+              key={`company-select-${companies.length}`}
+              value={companyId} 
+              onValueChange={(val) => setCompanyId(val || "")}
+            >
               <SelectTrigger className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10">
                 <SelectValue placeholder="Vyberte firmu" />
               </SelectTrigger>

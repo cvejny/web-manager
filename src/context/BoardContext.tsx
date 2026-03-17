@@ -94,7 +94,44 @@ export function BoardProvider({ children }: { children: ReactNode }) {
   };
 
   const moveCompany = (companyId: string, sourceCol: string, destCol: string, sourceIndex: number, destIndex: number) => {
-    // ... Existing moveCompany implementation ...
+    setBoardData((prev) => {
+      if (sourceCol === destCol) {
+        const column = prev.columns[sourceCol];
+        const newCompanyIds = Array.from(column.companyIds);
+        newCompanyIds.splice(sourceIndex, 1);
+        newCompanyIds.splice(destIndex, 0, companyId);
+        
+        return {
+          ...prev,
+          columns: {
+            ...prev.columns,
+            [sourceCol]: { ...column, companyIds: newCompanyIds },
+          },
+        };
+      } else {
+        const srcCol = prev.columns[sourceCol];
+        const dstCol = prev.columns[destCol];
+        
+        const newSrcIds = Array.from(srcCol.companyIds);
+        newSrcIds.splice(sourceIndex, 1);
+        
+        const newDstIds = Array.from(dstCol.companyIds);
+        newDstIds.splice(destIndex, 0, companyId);
+        
+        return {
+          ...prev,
+          companies: {
+            ...prev.companies,
+            [companyId]: { ...prev.companies[companyId], status: destCol },
+          },
+          columns: {
+            ...prev.columns,
+            [sourceCol]: { ...srcCol, companyIds: newSrcIds },
+            [destCol]: { ...dstCol, companyIds: newDstIds },
+          },
+        };
+      }
+    });
   };
 
   const addTask = (taskData: Omit<Task, "id" | "isCompleted" | "createdAt">) => {
