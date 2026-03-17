@@ -2,7 +2,8 @@
 
 import React, { useMemo } from "react";
 import { useBoard } from "@/context/BoardContext";
-import { Layers, CircleDollarSign, Loader2, Moon, Sun } from "lucide-react";
+import Link from "next/link";
+import { Layers, CircleDollarSign, Loader2, Moon, Sun, CheckSquare } from "lucide-react";
 import { useTheme } from "next-themes";
 
 export function Header() {
@@ -11,6 +12,8 @@ export function Header() {
 
   const stats = useMemo(() => {
     const companies = Object.values(boardData.companies);
+    const tasks = Object.values(boardData.tasks || {});
+    const pendingTasks = tasks.filter(t => !t.isCompleted).length;
     
     // Total potential revenue (all except done)
     const potentialRevenue = companies
@@ -26,23 +29,23 @@ export function Header() {
     // In progress websites
     const inProgressCount = boardData.columns["in-progress"]?.companyIds.length || 0;
 
-    return { formattedRevenue, inProgressCount };
+    return { formattedRevenue, inProgressCount, pendingTasks };
   }, [boardData]);
 
   return (
     <header className="sticky top-0 z-20 w-full mb-8 border-b border-black/10 dark:border-white/10 shadow-xl bg-white dark:bg-slate-900/60 transition-all duration-300">
       <div className="container mx-auto max-w-7xl flex flex-col md:flex-row h-auto md:h-20 items-center justify-between px-6 py-4 md:py-0 gap-4">
-        <div className="flex items-center gap-3">
-          <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border border-white/10">
+        <Link href="/" className="flex items-center gap-3 group">
+          <div className="p-2 bg-gradient-to-br from-indigo-500 to-purple-600 rounded-xl shadow-lg border border-white/10 group-hover:scale-105 transition-transform">
             <Layers className="h-6 w-6 text-white" />
           </div>
           <div>
             <h1 className="text-xl font-bold bg-gradient-to-r from-indigo-600 via-purple-600 to-pink-600 dark:from-indigo-200 dark:via-purple-200 dark:to-white bg-clip-text text-transparent">
               Web Manager
             </h1>
-            <p className="text-xs text-slate-900 dark:text-slate-400 font-medium">Pipeline Management</p>
+            <p className="text-xs text-slate-900 dark:text-slate-400 font-medium font-bold">Pipeline Management</p>
           </div>
-        </div>
+        </Link>
         
         <div className="flex items-center gap-4">
           <button
@@ -53,22 +56,32 @@ export function Header() {
             <Moon className="h-5 w-5 hidden dark:block" />
           </button>
           
-          <div className="flex items-center gap-3 glass-card px-4 py-2 rounded-xl hidden sm:flex bg-white dark:bg-transparent border border-black/10 dark:border-white/5">
+          <Link href="/tasks" className="flex items-center gap-3 glass-card px-4 py-2 rounded-xl bg-white dark:bg-transparent border border-black/10 dark:border-white/5 hover:bg-slate-50 dark:hover:bg-white/5 transition-colors group">
+            <div className="p-2 bg-emerald-100 dark:bg-emerald-500/20 rounded-lg border border-emerald-200 dark:border-emerald-500/30 group-hover:scale-110 transition-transform">
+              <CheckSquare className="h-5 w-5 text-emerald-600 dark:text-emerald-400" />
+            </div>
+            <div>
+              <p className="text-[10px] uppercase tracking-wider text-slate-800 dark:text-slate-400 font-bold font-bold">Moje Úkoly</p>
+              <p className="font-semibold text-black dark:text-slate-100">{stats.pendingTasks} aktivních</p>
+            </div>
+          </Link>
+
+          <div className="flex items-center gap-3 glass-card px-4 py-2 rounded-xl hidden lg:flex bg-white dark:bg-transparent border border-black/10 dark:border-white/5">
             <div className="p-2 bg-indigo-100 dark:bg-indigo-500/20 rounded-lg border border-indigo-200 dark:border-indigo-500/30">
               <CircleDollarSign className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-slate-800 dark:text-slate-400 font-bold">Potenciální obrat</p>
+              <p className="text-[10px] uppercase tracking-wider text-slate-800 dark:text-slate-400 font-bold font-bold">Obrat Pipeline</p>
               <p className="font-semibold text-black dark:text-slate-100">{stats.formattedRevenue}</p>
             </div>
           </div>
           
-          <div className="flex items-center gap-3 glass-card px-4 py-2 rounded-xl hidden sm:flex bg-white dark:bg-transparent border border-black/10 dark:border-white/5">
+          <div className="flex items-center gap-3 glass-card px-4 py-2 rounded-xl hidden lg:flex bg-white dark:bg-transparent border border-black/10 dark:border-white/5">
             <div className="p-2 bg-pink-100 dark:bg-pink-500/20 rounded-lg border border-pink-200 dark:border-pink-500/30">
               <Loader2 className="h-5 w-5 text-pink-600 dark:text-pink-400" />
             </div>
             <div>
-              <p className="text-[10px] uppercase tracking-wider text-slate-800 dark:text-slate-400 font-bold">Rozdělané weby</p>
+              <p className="text-[10px] uppercase tracking-wider text-slate-800 dark:text-slate-400 font-bold font-bold">V realizaci</p>
               <p className="font-semibold text-black dark:text-slate-100">{stats.inProgressCount}</p>
             </div>
           </div>

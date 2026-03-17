@@ -21,14 +21,29 @@ export interface ColumnData {
   companyIds: string[];
 }
 
+export interface Task {
+  id: string;
+  companyId: string;
+  title: string;
+  description: string;
+  priority: Priority;
+  dueDate: string; // ISO date string
+  dueTime?: string; // HH:mm
+  isAllDay: boolean;
+  isCompleted: boolean;
+  createdAt: string;
+}
+
 export interface BoardData {
   companies: Record<string, Company>;
   columns: Record<string, ColumnData>;
+  tasks: Record<string, Task>;
   columnOrder: string[];
 }
 
 export const initialBoardData: BoardData = {
   companies: {},
+  tasks: {},
   columns: {
     "lead": { id: "lead", title: "Potenciální (Lead)", companyIds: [] },
     "contacted": { id: "contacted", title: "Kontaktováno", companyIds: [] },

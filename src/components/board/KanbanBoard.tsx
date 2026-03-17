@@ -12,7 +12,6 @@ import { CompanyModal } from "@/components/modals/CompanyModal";
 
 export function KanbanBoard() {
   const { boardData, moveCompany } = useBoard();
-  const [searchTerm, setSearchTerm] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingCompany, setEditingCompany] = useState<Company | null>(null);
 
@@ -50,20 +49,10 @@ export function KanbanBoard() {
   return (
     <div className="flex flex-col h-full">
       <div className="container mx-auto max-w-7xl px-6">
-        <div className="flex flex-col sm:flex-row justify-between items-center mb-8 gap-4">
-          <div className="relative w-full max-w-md">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-slate-900 dark:text-slate-400" />
-            <Input 
-              placeholder="Vyhledat firmu..." 
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10 bg-white dark:bg-slate-900/50 border-black/20 dark:border-white/10 text-black dark:text-slate-200 focus:border-indigo-500/50 focus:ring-indigo-500/20 backdrop-blur-md h-12 rounded-xl"
-            />
-          </div>
-          
+        <div className="flex flex-col sm:flex-row justify-end items-center mb-8 gap-4">
           <Button 
             onClick={handleAddNew}
-            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 whitespace-nowrap h-12 px-6 rounded-xl"
+            className="bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white shadow-lg shadow-indigo-500/25 whitespace-nowrap h-12 px-6 rounded-xl w-full sm:w-auto"
           >
             <Plus className="mr-2 h-5 w-5" /> Přidat firmu
           </Button>
@@ -76,11 +65,7 @@ export function KanbanBoard() {
             {boardData.columnOrder.map((colId) => {
               const column = boardData.columns[colId];
               const companies = column.companyIds
-                .map((companyId) => boardData.companies[companyId])
-                .filter(company => 
-                  company.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                  company.website.toLowerCase().includes(searchTerm.toLowerCase())
-                );
+                .map((companyId) => boardData.companies[companyId]);
 
               return (
                 <Column 
