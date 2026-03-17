@@ -70,9 +70,9 @@ export function KanbanBoard() {
         </div>
       </div>
 
-      <div className="flex-1 overflow-x-auto pb-8 px-6">
+      <div className="flex-1 overflow-x-auto pb-8 px-4">
         <DragDropContext onDragEnd={onDragEnd}>
-          <div className="flex gap-6 h-full items-start w-max mx-auto px-4">
+          <div className="flex gap-4 h-full items-start w-max mx-auto px-2">
             {boardData.columnOrder.map((colId) => {
               const column = boardData.columns[colId];
               const companies = column.companyIds

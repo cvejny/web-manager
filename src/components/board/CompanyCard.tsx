@@ -4,7 +4,7 @@ import React from "react";
 import { Draggable } from "@hello-pangea/dnd";
 import { Company } from "@/types";
 import { Badge } from "@/components/ui/badge";
-import { Building2, Globe, MapPin, Calendar, Pencil, Trash2, Phone } from "lucide-react";
+import { Building2, Globe, MapPin, Calendar, Pencil, Trash2, Phone, Mail } from "lucide-react";
 import { useBoard } from "@/context/BoardContext";
 import { format } from "date-fns";
 import { cs } from "date-fns/locale";
@@ -92,6 +92,13 @@ export function CompanyCard({ company, index, onEdit }: CompanyCardProps) {
               <p className="text-xs text-slate-900 dark:text-slate-400 flex items-center gap-1.5">
                 <Phone className="w-3 h-3 flex-shrink-0 text-slate-900 dark:text-slate-400" /> 
                 <a href={`tel:${company.phone}`} className="hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" onClick={(e) => e.stopPropagation()}>{company.phone}</a>
+              </p>
+            )}
+
+            {company.email && (
+              <p className="text-xs text-slate-900 dark:text-slate-400 flex items-center gap-1.5">
+                <Mail className="w-3 h-3 flex-shrink-0 text-slate-900 dark:text-slate-400" />
+                <a href={`mailto:${company.email}`} className="hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors" onClick={(e) => e.stopPropagation()}>{company.email}</a>
               </p>
             )}
 

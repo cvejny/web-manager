@@ -36,10 +36,10 @@ export function Column({ column, companies, onEditCompany }: ColumnProps) {
   }).format(totalRevenue);
 
   return (
-    <div className="flex flex-col flex-1 min-w-[350px] md:min-w-0 w-96">
+    <div className="flex flex-col flex-1 min-w-[280px] md:min-w-0 w-80">
       <div className={`glass-panel bg-white/95 dark:bg-slate-900/40 p-5 mb-4 border-b-2 flex justify-between items-center ${getHeaderColor(column.id)} rounded-b-none shadow-md`}>
-        <h2 className="font-bold text-xl uppercase tracking-wider">{column.title}</h2>
-        <Badge variant="secondary" className="bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-black dark:text-slate-200 border-none px-3 py-1 text-base">
+        <h2 className="font-bold text-lg uppercase tracking-wider">{column.title}</h2>
+        <Badge variant="secondary" className="bg-slate-200 dark:bg-white/10 hover:bg-slate-300 dark:hover:bg-white/20 text-black dark:text-slate-200 border-none px-2 py-1 text-sm">
           {companies.length}
         </Badge>
       </div>

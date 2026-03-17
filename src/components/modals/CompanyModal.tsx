@@ -33,6 +33,7 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
   
   const [name, setName] = useState("");
   const [website, setWebsite] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
   const [isContacted, setIsContacted] = useState(false);
@@ -46,6 +47,7 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
     if (company) {
       setName(company.name);
       setWebsite(company.website);
+      setEmail(company.email || "");
       setAddress(company.address);
       setPhone(company.phone || "");
       setIsContacted(company.isContacted ?? true);
@@ -57,6 +59,7 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
     } else {
       setName("");
       setWebsite("");
+      setEmail("");
       setAddress("");
       setPhone("");
       setIsContacted(false);
@@ -77,6 +80,7 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
       updateCompany(company.id, {
         name,
         website,
+        email,
         address,
         phone,
         isContacted,
@@ -89,6 +93,7 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
       addCompany({
         name,
         website,
+        email,
         address,
         phone,
         isContacted,
@@ -126,6 +131,11 @@ export function CompanyModal({ isOpen, onOpenChange, company }: CompanyModalProp
               <Label htmlFor="revenue" className="text-black font-semibold dark:text-slate-300 dark:font-normal">Předpokládaná cena (Kč)</Label>
               <Input id="revenue" type="number" placeholder="50000" value={revenue} onChange={e => setRevenue(e.target.value)} className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10 focus-visible:ring-indigo-500/50 text-black dark:text-slate-200" />
             </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="email" className="text-black font-semibold dark:text-slate-300 dark:font-normal">E-mail firmy</Label>
+            <Input id="email" type="email" placeholder="info@firma.cz" value={email} onChange={e => setEmail(e.target.value)} className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10 focus-visible:ring-indigo-500/50 text-black dark:text-slate-200" />
           </div>
 
           <div className="grid grid-cols-2 gap-4">
