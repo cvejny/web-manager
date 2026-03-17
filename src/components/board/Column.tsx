@@ -48,7 +48,7 @@ export function Column({ column, companies, onEditCompany }: ColumnProps) {
 
   return (
     <div className="flex flex-col flex-1 min-w-[280px] md:min-w-0 w-80">
-      <div className={`glass-panel bg-white/95 dark:bg-slate-900/40 p-5 mb-4 border-b-2 flex justify-between items-center ${getHeaderColor(column.id)} rounded-b-none shadow-md relative overflow-visible`}>
+      <div className={`glass-panel bg-white/95 dark:bg-slate-900/40 p-5 mb-4 border-b-2 flex justify-between items-center ${getHeaderColor(column.id)} rounded-b-none shadow-md relative overflow-visible ${showRejected ? 'z-50' : 'z-10'}`}>
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-lg uppercase tracking-wider">{column.title}</h2>
           {column.id === "contacted" && (
