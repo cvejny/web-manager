@@ -56,7 +56,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
         setTitle("");
         // If we have companies and no companyId is set, pick the first one
         if (companies.length > 0 && !companyId) {
-          setCompanyId(companies[0].id);
+          setTimeout(() => setCompanyId(companies[0].id), 0);
         }
         setDescription("");
         setPriority("Medium");
@@ -119,9 +119,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
               onValueChange={(val) => setCompanyId(val || "")}
             >
               <SelectTrigger className="bg-white dark:bg-slate-800/50 border-black/20 dark:border-white/10">
-                <SelectValue placeholder="Vyberte firmu">
-                  {companies.find(c => c.id === companyId)?.name}
-                </SelectValue>
+                <SelectValue placeholder="Vyberte firmu" />
               </SelectTrigger>
               <SelectContent className="bg-white dark:bg-slate-800 border-black/20 dark:border-white/10">
                 {companies.map(c => (

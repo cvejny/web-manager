@@ -48,7 +48,7 @@ export function Column({ column, companies, onEditCompany }: ColumnProps) {
 
   return (
     <div className="flex flex-col flex-1 min-w-[280px] md:min-w-0 w-80">
-      <div className={`glass-panel bg-white/95 dark:bg-slate-900/40 p-5 mb-4 border-b-2 flex justify-between items-center ${getHeaderColor(column.id)} rounded-b-none shadow-md relative`}>
+      <div className={`glass-panel bg-white/95 dark:bg-slate-900/40 p-5 mb-4 border-b-2 flex justify-between items-center ${getHeaderColor(column.id)} rounded-b-none shadow-md relative overflow-visible`}>
         <div className="flex items-center gap-2">
           <h2 className="font-bold text-lg uppercase tracking-wider">{column.title}</h2>
           {column.id === "contacted" && (
@@ -66,7 +66,7 @@ export function Column({ column, companies, onEditCompany }: ColumnProps) {
         </Badge>
 
         {showRejected && column.id === "contacted" && (
-          <div className="absolute top-full left-0 w-full z-50 bg-white dark:bg-slate-800 shadow-xl rounded-b-xl border border-black/10 dark:border-white/10 p-3 animate-in fade-in slide-in-from-top-2">
+          <div className="absolute top-full left-0 w-full z-[100] bg-white dark:bg-slate-800 shadow-2xl rounded-b-xl border border-black/10 dark:border-white/10 p-3">
             <div className="flex justify-between items-center mb-2 pb-1 border-b border-black/5 dark:border-white/5">
               <span className="text-xs font-bold uppercase text-slate-500">Odmítnuté firmy</span>
               <button onClick={() => setShowRejected(false)} className="text-slate-400 hover:text-slate-600"><XCircle size={14} /></button>
