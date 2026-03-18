@@ -47,17 +47,14 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
       if (task) {
         setTitle(task.title);
         setCompanyId(task.companyId);
-        setDescription(task.description);
+        setDescription(task.description || "");
         setPriority(task.priority);
         setDueDate(task.dueDate);
         setDueTime(task.dueTime || "");
         setIsAllDay(task.isAllDay);
       } else {
         setTitle("");
-        // If we have companies and no companyId is set, pick the first one
-        if (companies.length > 0 && !companyId) {
-          setCompanyId(companies[0].id);
-        }
+        setCompanyId(companies[0]?.id || "");
         setDescription("");
         setPriority("Medium");
         setDueDate(new Date().toISOString().split('T')[0]);
@@ -65,7 +62,7 @@ export function TaskModal({ isOpen, onOpenChange, task }: TaskModalProps) {
         setIsAllDay(true);
       }
     }
-  }, [task, isOpen, companies]);
+  }, [isOpen, task]); // Removed companies from dependencies to prevent reset on every render
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
